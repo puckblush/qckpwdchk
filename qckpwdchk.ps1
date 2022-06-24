@@ -89,6 +89,9 @@ try {
 if($file.length -lt $maxFileSize -and $file.FullName.endswith(".exe") -ne $true -and $file.FullName.endswith(".lnk") -ne $true -and $file.FullName.endswith(".dll") -ne $true) {
 
 $filecontent = Get-Content -Erroraction 'stop' $file.FullName
+if($filecontent.length -eq 32) {
+Write-Host -Back black -Fore green "HASH: '$file.FullName' might be a hash"
+}
 foreach($term in $highgradeterms) {
 if($filecontent.ToLower().contains($term)) {
 Write-Host -Fore green -Back black "'$term' found in " $file.FullName " :"
