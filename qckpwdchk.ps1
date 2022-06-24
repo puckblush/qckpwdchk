@@ -86,7 +86,7 @@ Write-Host -Fore yellow -Back black $file.FullName
 }
 
 try {
-if($file.length -lt $maxFileSize -and $file.endswith(".exe") -ne $true -and $file.endswith(".lnk") -ne $true -and $file.endswith(".dll") -ne $true) {
+if($file.length -lt $maxFileSize -and $file.FullName.endswith(".exe") -ne $true -and $file.FullName.endswith(".lnk") -ne $true -and $file.FullName.endswith(".dll") -ne $true) {
 
 $filecontent = Get-Content -Erroraction 'stop' $file.FullName
 foreach($term in $highgradeterms) {
