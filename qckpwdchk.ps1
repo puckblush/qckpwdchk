@@ -75,13 +75,13 @@ $filename = $file.Name
 
 foreach($term in $highgradeterms) {
 if($filename.ToLower().contains($term)) {
-Write-Host -Fore green -Back black "$file.FullName"
+Write-Host -Fore green -Back black $file.FullName
 }
 }
 
 foreach($term in $lowgradeterms) {
 if($filename.ToLower().contains($term)) {
-Write-Host -Fore yellow -Back black "$file.FullName"
+Write-Host -Fore yellow -Back black $file.FullName
 }
 }
 
