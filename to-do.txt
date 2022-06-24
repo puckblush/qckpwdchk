@@ -1,0 +1,6 @@
+- Unattend files
+- Service passwords
+- Passwords in memory (processes we can access)
+- Browser passworsd
+- Passwords in user comments
+- LAPS passwords
