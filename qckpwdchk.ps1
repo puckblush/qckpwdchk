@@ -8,6 +8,7 @@ Write-Host -Background black -Fore yellow @"
 $lowgradeterms = @("data","info","user",".xml",".csv",".xlsx")
 $highgradeterms = @("pass","login","flag","pwd","admin","cred")
 $unattendPaths = @("$Env:SystemDrive\Windows\Panther","$Env:SystemDrive\Windows\System32\Panther","$Env:SystemDrive\Windows\System32\Sysprep")
+$maxFileSize = 8192
 
 Write-Host -Background black -fore yellow "Running as $(whoami)`n"
 Write-Host -Background black -Fore cyan "Checking PSReadLine files..."
@@ -45,7 +46,6 @@ Write-Host -Back black -Fore white "LINE : " $line
 $PSReadlineContent = ""
 
 }
-$maxFileSize = 8192
 
 Write-Host -Background black -Fore cyan "`nChecking Common Document Locations..."
 Write-Host -Background black -Fore cyan "Search Terms : $highgradeterms $lowgradeterms"
