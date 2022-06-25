@@ -135,6 +135,9 @@ Write-Host -Back black -Fore green "[UNATTEND] Possible Password Value (Base64 E
 elseif($entry.ToLower().contains("</password")) {
 Write-Host -Back black -Fore green "[UNATTEND] Possible Password Value (Base64 Encoded) :" $entry.Trim().split("<")[0]
 }
+elseif($entry.ToLower().contains("</domain")) {
+Write-Host -Back black -Fore green "[UNATTEND] Possible Domain Value :" $entry.Trim().split("<")[0]
+}
 elseif($entry.ToLower().contains("</username")) {
 Write-Host -Back black -Fore green "[UNATTEND] Possible Username Value :" $entry.Trim().split("<")[0]
 }
