@@ -33,7 +33,7 @@ $printed = 1
 }
 }
 foreach($term in $lowgradeterms) {
-if($line.contains($term) -and $printed -eq 0) {
+if($line.ToLower().contains($term) -and $printed -eq 0) {
 Write-Host -Back black -Fore yellow "LINE : " $line
 $printed = 1
 }
