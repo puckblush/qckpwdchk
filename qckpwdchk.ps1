@@ -26,14 +26,14 @@ catch { Write-Host -Back black -Fore red "An error occured! : " $_.Exception }
 foreach($line in $PSReadlineContent) {
 $printed = 0
 foreach($term in $highgradeterms) {
-if($line.ToLower().contains($term)) {
+if($line.ToLower().contains($term) -and $printed -eq 0) {
 Write-Host -Back black -Fore green "LINE : " $line
 $printed = 1
 }
 }
 
 foreach($term in $lowgradeterms) {
-if($line.contains($term)) {
+if($line.contains($term) -and $printed -eq 0) {
 Write-Host -Back black -Fore yellow "LINE : " $line
 $printed = 1
 }
