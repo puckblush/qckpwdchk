@@ -1,5 +1,4 @@
 - Service passwords
 - Passwords in memory (processes we can access)
 - Browser passwords
-- Passwords in user comments
 - LAPS passwords
