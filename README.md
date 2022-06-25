@@ -3,6 +3,7 @@
 - Reading Powershell History <br>
 - Scanning user's profiles<br>
 - Scanning Unattend files<br>
+- Checking for passwords in local user comments<br>
 </h4>
   
 
