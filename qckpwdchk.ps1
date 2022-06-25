@@ -7,6 +7,7 @@ Write-Host -Background black -Fore yellow @"
 "@
 $lowgradeterms = @("data","info","user",".xml",".csv",".xlsx")
 $highgradeterms = @("pass","login","flag","pwd","admin","cred","account","acct")
+$passwordFormatTerms = @(",",":","=")
 $unattendPaths = @("$Env:SystemDrive\Windows\Panther","$Env:SystemDrive\Windows\System32\Panther","$Env:SystemDrive\Windows\System32\Sysprep")
 $maxFileSize = 8192
 
@@ -31,7 +32,6 @@ Write-Host -Back black -Fore green "LINE : " $line
 $printed = 1
 }
 }
-
 foreach($term in $lowgradeterms) {
 if($line.contains($term) -and $printed -eq 0) {
 Write-Host -Back black -Fore yellow "LINE : " $line
@@ -41,10 +41,8 @@ $printed = 1
 if($printed -eq 0) {
 Write-Host -Back black -Fore white "LINE : " $line
 }
-
 }
 $PSReadlineContent = ""
-
 }
 
 Write-Host -Background black -Fore cyan "`nChecking Common Document Locations..."
@@ -72,16 +70,17 @@ try {
 $filelist = Get-ChildItem -Erroraction 'stop' $profile -Recurse
 foreach($file in $filelist) {
 $filename = $file.Name
-
 foreach($term in $highgradeterms) {
 if($filename.ToLower().contains($term)) {
 Write-Host -Fore green -Back black $file.FullName
+$printed = 1
 }
 }
 
 foreach($term in $lowgradeterms) {
-if($filename.ToLower().contains($term)) {
+if($filename.ToLower().contains($term) -and $printed) {
 Write-Host -Fore yellow -Back black $file.FullName
+$printed = 1
 }
 }
 
@@ -118,7 +117,6 @@ catch [System.UnauthorizedAccessException] {Write-Host -Back black -Fore red "Ac
 catch [System.Management.Automation.ItemNotFoundException] {Write-Host -Back black -Fore red "User does not have a Profile"}
 catch { Write-Host -Back black -Fore red "An error occured! : " $_.Exception }
 }
-
 Write-Host -Background black -Fore cyan "Checking Unattend files..."
 foreach($unattendPath in $unattendPaths) {
 try {
@@ -143,17 +141,36 @@ Write-Host -Back black -Fore green "[UNATTEND] Possible Username Value :" $entry
 elseif($entry.ToLower().contains("</name") -or $entry.ToLower().contains("</description")) {
 Write-Host -Back black -Fore yellow "[UNATTEND] Possible Misc Value :" $entry.Trim().split("<")[0]
 }
-
 }
 }
 catch [System.UnauthorizedAccessException] {Write-Host -Back black -Fore red "Access denied for file '$file'"}
 catch [System.Management.Automation.ItemNotFoundException] {Write-Host -Back black -Fore red "No unattend path at $unattendPath"}
 catch { Write-Host -Back black -Fore red "An error occured! : " $_.Exception }
 }
-
 }
 catch [System.UnauthorizedAccessException] {Write-Host -Back black -Fore red "Access denied"}
 catch [System.Management.Automation.ItemNotFoundException] {Write-Host -Back black -Fore red "No unattend path at $unattendPath"}
 catch { Write-Host -Back black -Fore red "An error occured! : " $_.Exception }
-
+}
+Write-Host -Background black -Fore cyan "`nChecking Local User Comments..."
+foreach($user in Get-LocalUser) {
+$printed =0 
+foreach($term in $highgradeterms) {
+if($user.Description.ToLower().contains($term) -and $printed -eq 0) {
+Write-Host -Back black -Fore green "["$user.Name"] :" $user.Description
+$printed =1 
+}
+}
+foreach($term in $lowgradeterms) {
+if($user.Description.ToLower().contains($term) -and $printed -eq 0) {
+Write-Host -Back black -Fore green "["$user.Name"] :" $user.Description
+$printed =1 
+}
+}
+foreach($term in $passwordFormatTerms) {
+if($user.Description.ToLower().contains($term) -and $printed -eq 0) {
+Write-Host -Back black -Fore green "["$user.Name"] :" $user.Description
+$printed = 1
+}
+}
 }
